@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8B6D7A4F-059F-4A8C-B089-35A919EA776A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MyLocations</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9992C63CA6DF4E14212554C2FA8F6EA9971A2454</key>
+		<string>https://github.com/bradlgray/MyLocations.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MyLocations.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9992C63CA6DF4E14212554C2FA8F6EA9971A2454</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/bradlgray/MyLocations.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9992C63CA6DF4E14212554C2FA8F6EA9971A2454</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9992C63CA6DF4E14212554C2FA8F6EA9971A2454</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MyLocations</string>
+		</dict>
+	</array>
+</dict>
+</plist>
