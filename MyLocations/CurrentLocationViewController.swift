@@ -14,7 +14,14 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     
     var location: CLLocation?
-
+    
+    var updatingLocation = false
+    
+    var lastLocationError: NSError?
+    
+    
+    
+    
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var latitudeLabel: UILabel!
    
@@ -48,6 +55,14 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println("didFailWithError \(error)")
+        
+        if error.code == CLError.LocationUnknown.rawValue {
+            return
+        }
+        lastLocationError = error
+        
+        stopLocationManager()
+        updateLabels()
     }
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
    let newLocation = locations.last as! CLLocation
@@ -80,7 +95,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         }
         }
 
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateLabels()
+    }
 
 }
 
