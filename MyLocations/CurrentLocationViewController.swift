@@ -11,13 +11,26 @@ import CoreLocation
 
 class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate {
     
-    let locationManager = CLLocationManager()
+    let locationManager = CLLocationManager() /* object that will perfomr geocoding    */
     
-    var location: CLLocation?
+    var location: CLLocation? /* object that contains adress results   */
     
     var updatingLocation = false
     
     var lastLocationError: NSError?
+    
+    
+    //below reverse geocoding instance variables
+    let geocoder = CLGeocoder() /* object that will perfomr geocoding    */
+    
+    var placemark: CLPlacemark? /* object that contains adress results   */
+    
+    var performingReverseGeoCoding = false
+
+    var lastGeocodingError: NSError?
+    
+    
+    
     
     
     
@@ -45,11 +58,20 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             showLocationServicesDeniedAlert()
             return
         }
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.startUpdatingLocation()
         
-        
+        if updatingLocation {
+            stopLocationManager()
+        } else {
+            location = nil
+            lastLocationError = nil
+            startLocationManager()
+        }
+        updateLabels()
+        configureGetButton()
     }
     //Mark : - CLLocationManagerDelegate
     
@@ -59,17 +81,50 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
         if error.code == CLError.LocationUnknown.rawValue {
             return
         }
-        lastLocationError = error
+        
         
         stopLocationManager()
         updateLabels()
+        configureGetButton()
     }
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
    let newLocation = locations.last as! CLLocation
         
         println("didUpdateLocations \(newLocation)")
-        location = newLocation
-        updateLabels()
+        lastLocationError = nil
+        
+        if newLocation.timestamp.timeIntervalSinceNow < -5 {
+            return
+        }
+        
+        if newLocation.horizontalAccuracy < 0 {
+            return
+        }
+        
+        if location == nil || location!.horizontalAccuracy > newLocation.horizontalAccuracy {
+            
+            lastLocationError = nil
+            location = newLocation
+            updateLabels()
+            
+            if newLocation.horizontalAccuracy <= locationManager.desiredAccuracy {
+                println("*** we're done!")
+                stopLocationManager()
+                configureGetButton()
+            }
+            //part of the new reverse geocoding
+            
+            if !performingReverseGeoCoding {
+                println("*** Going to geocode")
+                
+                geocoder.reverseGeocodeLocation(location, completionHandler: {
+                    placemarks, error in
+                    
+                    println("*** Found placemarks: \(placemarks), error: \(error)")
+                })
+            }
+        }
+        
         
     }
     func showLocationServicesDeniedAlert() {
@@ -91,15 +146,56 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
             longitudeLabel.text = ""
             addressLabel.text = ""
             tagButton.hidden = true
-            messageLabel.text = "tap 'Get My Location' to Start"
+            var statusMessage: String
+            if let error = lastLocationError {
+                if error.domain == kCLErrorDomain &&
+                    error.code == CLError.Denied.rawValue {
+                        statusMessage = "Location services Disabled"
+                } else {
+                    statusMessage = "Error Getting Location"
+                }
+            } else if !CLLocationManager.locationServicesEnabled() {
+                statusMessage = "Location services Disabled"
+            } else if updatingLocation {
+                statusMessage = "Searching..."
+            } else {
+                statusMessage = "Tap 'Get My Location' to Start"
+            }
+            messageLabel.text = statusMessage
         }
         }
-
+    func startLocationManager() {
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+            updatingLocation = true
+            
+        }
+    }
+    
+    
+    
+    func stopLocationManager() {
+        if updatingLocation {
+            locationManager.stopUpdatingLocation()
+            locationManager.delegate = nil
+            updatingLocation = false
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateLabels()
+        configureGetButton()
     }
-
+    func configureGetButton() {
+        if updatingLocation {
+            getButton.setTitle("Stop", forState: .Normal)
+        } else {
+            getButton.setTitle("Get My Location", forState: .Normal)
+        }
+    }
 }
 
 
