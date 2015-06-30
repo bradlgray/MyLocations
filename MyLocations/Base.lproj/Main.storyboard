@@ -279,12 +279,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="addressLabel" destination="NPA-NJ-RCi" id="Y2Y-du-R6w"/>
-                        <outlet property="categoryLabel" destination="tEZ-Kc-qmk" id="W7g-e8-KBc"/>
-                        <outlet property="dateLabel" destination="ZEN-Cv-Aj2" id="zal-TS-EH8"/>
-                        <outlet property="descriptionTextView" destination="sdj-Qe-oAf" id="tWO-vt-92a"/>
-                        <outlet property="latitudeLabel" destination="qBQ-LG-Zu7" id="aIt-NC-6zB"/>
-                        <outlet property="longitudeLabel" destination="5v6-Di-7WK" id="nHg-wr-Yft"/>
+                        <outlet property="addressLabel" destination="HPv-cN-tRD" id="QNy-lA-z65"/>
+                        <outlet property="categoryLabel" destination="2Os-xR-JYI" id="srK-uW-lcF"/>
+                        <outlet property="dateLabel" destination="3zo-cp-cZe" id="zF5-zK-nfF"/>
+                        <outlet property="descriptionTextView" destination="sdj-Qe-oAf" id="QTi-f4-Muq"/>
+                        <outlet property="latitudeLabel" destination="A5v-x6-fs8" id="FfZ-c8-DIg"/>
+                        <outlet property="longitudeLabel" destination="8CM-PM-gXV" id="ul8-tZ-iHA"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BEE-gg-5wl" userLabel="First Responder" sceneMemberID="firstResponder"/>
