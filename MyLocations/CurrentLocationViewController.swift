@@ -32,6 +32,10 @@ class CurrentLocationViewController: UIViewController, CLLocationManagerDelegate
 
     var lastGeocodingError: NSError?
     
+    var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    
+    
+    
     
     
     
@@ -278,24 +282,15 @@ locationManager.stopUpdatingLocation()
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "TagLocation" {
-        let navigationController = segue.destinationViewController
-        as! UINavigationController let controller = navigationController.topViewController
-        
-        ￼
-            as! LocationDetailsViewController
-        controller.coordinate = location!.coordinate
-        controller.placemark = placemark }
+            let navigationController = segue.destinationViewController as! UINavigationController
+            
+            let controller = navigationController.topViewController as! LocationDetailsViewController
+            
+            controller.coordinate = location!.coordinate
+            controller.placemark = placemark }
     }
-    override func viewDidLoad() { super.viewDidLoad()
-        descriptionTextView.text = "" categoryLabel.text = ""
-        latitudeLabel.text = String(format: "%.8f", coordinate.latitude) longitudeLabel.text = String(format: "%.8f", coordinate.longitude)
-        if let placemark = placemark {
-        addressLabel.text = stringFromPlacemark(placemark)
-    } else {
-        addressLabel.text = "No Address Found"
-        }
-        dateLabel.text = formatDate(NSDate()) }
-}
+    
+    }
 
 
 
